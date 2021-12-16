@@ -7,6 +7,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 
+const commonCssLoader = {
+
+}
+
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -29,10 +33,16 @@ module.exports = {
        * 
        * // eslint-disable-next-line
        */
+      /**
+       * 正常来讲，一个文件只能被一个loader处理。
+       * 当一个文件要被多个loader处理时，那么一定要指定先后顺序，先执行eslint 再执行babel
+       */
       {
         test: /\.js$/,
         loader: 'eslint-loader',
         exclude: /node_modules/,
+        // 优先执行
+        enforce:'pre',
         options: {
           // 自动修复eslint的错误
           fixed: true
